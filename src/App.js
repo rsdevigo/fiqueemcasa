@@ -1,25 +1,39 @@
 import React from "react";
 import logo from "./logo.svg";
 import "./App.css";
-
+import Home from "./pages/Home";
+import NeedDashboard from "./pages/NeedDashboard";
+import HelperDashboard from "./pages/HelperDashboard";
+import Register from "./pages/Register";
+import BlockedWarning from "./pages/BlockedWarning";
+import Login from "./pages/Login";
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React asudhaush
-        </a>
-      </header>
-    </div>
+    <Router>
+      <div>
+        {/* A <Switch> looks through its children <Route>s and
+            renders the first one that matches the current URL. */}
+        <Route exact path="/">
+          <Home />
+        </Route>
+        <Route exact path="/login">
+          <Login />
+        </Route>
+        <Route exact path="/register">
+          <Register />
+        </Route>
+        <Route exact path="/helperdashboard">
+          <HelperDashboard />
+        </Route>
+        <Route exact path="/needdashboard">
+          <NeedDashboard />
+        </Route>
+        <Route path="/blocked">
+          <BlockedWarning />
+        </Route>
+      </div>
+    </Router>
   );
 }
 
