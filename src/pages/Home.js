@@ -1,8 +1,9 @@
 import React from "react";
 import { useHistory } from "react-router-dom";
-import { Grid, Typography, Button } from "@material-ui/core";
+import { Grid, Button } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import Logo from "../components/logo";
+import Unprotected from "../components/unprotected";
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -29,48 +30,50 @@ export default function Home() {
   const classes = useStyles();
   const history = useHistory();
   return (
-    <div className={classes.root}>
-      <Grid container direction="row" justify="center" alignItems="center">
-        <Logo />
-        <Grid item xs={12} className={classes.actionButtonsContainer}>
-          <Button
-            variant="contained"
-            size="large"
-            fullWidth={true}
-            color="secondary"
-            className={classes.actionButtons}
-            onClick={() => {
-              history.push("/register/helper");
-            }}
-          >
-            POSSO AJUDAR
-          </Button>
-          <Button
-            variant="contained"
-            size="large"
-            fullWidth={true}
-            color="secondary"
-            className={classes.actionButtons}
-            onClick={() => {
-              history.push("/register/need");
-            }}
-          >
-            QUERO AJUDA
-          </Button>
-          <Button
-            variant="contained"
-            size="large"
-            fullWidth={true}
-            color="secondary"
-            className={classes.actionButtons}
-            onClick={() => {
-              history.push("/login");
-            }}
-          >
-            JÁ POSSUO CADASTRO
-          </Button>
+    <Unprotected>
+      <div className={classes.root}>
+        <Grid container direction="row" justify="center" alignItems="center">
+          <Logo />
+          <Grid item xs={12} className={classes.actionButtonsContainer}>
+            <Button
+              variant="contained"
+              size="large"
+              fullWidth={true}
+              color="secondary"
+              className={classes.actionButtons}
+              onClick={() => {
+                history.push("/register/helper");
+              }}
+            >
+              POSSO AJUDAR
+            </Button>
+            <Button
+              variant="contained"
+              size="large"
+              fullWidth={true}
+              color="secondary"
+              className={classes.actionButtons}
+              onClick={() => {
+                history.push("/register/need");
+              }}
+            >
+              QUERO AJUDA
+            </Button>
+            <Button
+              variant="contained"
+              size="large"
+              fullWidth={true}
+              color="secondary"
+              className={classes.actionButtons}
+              onClick={() => {
+                history.push("/login");
+              }}
+            >
+              JÁ POSSUO CADASTRO
+            </Button>
+          </Grid>
         </Grid>
-      </Grid>
-    </div>
+      </div>
+    </Unprotected>
   );
 }

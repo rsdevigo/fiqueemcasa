@@ -7,27 +7,39 @@ export default function useUserProfile() {
   const [userProfile, setUserProfile] = useState(null);
   const [user, userloading, userError] = useAuthState(firebase.auth());
   useEffect(() => {
-    if (user) {
+    if (!userloading && !user) {
+      setLoading(false);
+    }
+    if (userError) {
+      const unsubscribe = function() {
+        setError(userError);
+        setLoading(false);
+      };
+      return () => unsubscribe();
+    }
+    if (!userloading && user) {
+      console.log(user.uid);
       const unsubscribe = firebase
         .firestore()
         .collection("users_profiles")
-        .doc("dummy_record")
+        .doc(user.uid)
         .onSnapshot(
           doc => {
-            setLoading(false);
             setUserProfile(doc);
+            setLoading(false);
           },
           err => {
+            console.log(err);
             setError(err);
+            setLoading(false);
           }
         );
       return () => unsubscribe();
     }
-
     // returning the unsubscribe function will ensure that
     // we unsubscribe from document changes when our id
     // changes to a different value.
-  }, [user]);
+  }, [user, userloading, userError]);
 
   return [error, loading, userProfile, user];
 }

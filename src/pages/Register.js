@@ -1,11 +1,11 @@
 import React from "react";
 import { useState } from "react";
-import { Grid, Typography, Button, TextField } from "@material-ui/core";
+import { Grid, Button, TextField } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import Logo from "../components/logo";
-import { useHistory, Redirect } from "react-router-dom";
+import Unprotected from "../components/unprotected";
+import { useHistory } from "react-router-dom";
 import firebase from "../firebase";
-import { useAuthState } from "react-firebase-hooks/auth";
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -32,7 +32,6 @@ const validateEmail = email => {
 export default function Register(props) {
   const classes = useStyles();
   const history = useHistory();
-  const [user, initialising, error] = useAuthState(firebase.auth());
   const [state, setState] = useState({
     email: "",
     password: "",
@@ -93,67 +92,71 @@ export default function Register(props) {
           }
         });
       })
-      .then(resp => {});
+      .then(resp => {
+        history.push("/completeregister/" + props.match.params.category);
+      });
   };
   return (
-    <div className={classes.root}>
-      <Grid container direction="row" justify="center" alignItems="center">
-        <Logo />
-        <Grid item xs={12} className={classes.formContainer}>
-          <form className={classes.root} noValidate autoComplete="off">
-            <TextField
-              id="outlined-basic"
-              label="Email"
-              variant="filled"
-              fullWidth={true}
-              color="secondary"
-              className={classes.inputs}
-              type="email"
-              error={state.validationerror.email.error}
-              onChange={handleChangeInput("email")}
-              helperText={
-                state.validationerror.email.error
-                  ? state.validationerror.email.message
-                  : ""
-              }
-              value={state.email}
-            />
-            <TextField
-              id="outlined-basic"
-              label="Senha"
-              variant="filled"
-              fullWidth={true}
-              color="secondary"
-              className={classes.inputs}
-              type="password"
-              onChange={handleChangeInput("password")}
-              value={state.password}
-            />
-            <Button
-              variant="contained"
-              size="medium"
-              fullWidth={true}
-              color="secondary"
-              className={classes.actionButtons}
-              onClick={onRegister}
-            >
-              Cadastrar
-            </Button>
-            <Button
-              variant="contained"
-              size="medium"
-              fullWidth={true}
-              color="secondary"
-              className={classes.actionButtons}
-              onClick={() => {
-                history.push("/");
-              }}
-            >
-              Voltar
-            </Button>
-          </form>
+    <Unprotected>
+      <div className={classes.root}>
+        <Grid container direction="row" justify="center" alignItems="center">
+          <Logo />
+          <Grid item xs={12} className={classes.formContainer}>
+            <form className={classes.root} noValidate autoComplete="off">
+              <TextField
+                id="outlined-basic"
+                label="Email"
+                variant="filled"
+                fullWidth={true}
+                color="secondary"
+                className={classes.inputs}
+                type="email"
+                error={state.validationerror.email.error}
+                onChange={handleChangeInput("email")}
+                helperText={
+                  state.validationerror.email.error
+                    ? state.validationerror.email.message
+                    : ""
+                }
+                value={state.email}
+              />
+              <TextField
+                id="outlined-basic"
+                label="Senha"
+                variant="filled"
+                fullWidth={true}
+                color="secondary"
+                className={classes.inputs}
+                type="password"
+                onChange={handleChangeInput("password")}
+                value={state.password}
+              />
+              <Button
+                variant="contained"
+                size="medium"
+                fullWidth={true}
+                color="secondary"
+                className={classes.actionButtons}
+                onClick={onRegister}
+              >
+                Cadastrar
+              </Button>
+              <Button
+                variant="contained"
+                size="medium"
+                fullWidth={true}
+                color="secondary"
+                className={classes.actionButtons}
+                onClick={() => {
+                  history.push("/");
+                }}
+              >
+                Voltar
+              </Button>
+            </form>
+          </Grid>
         </Grid>
-      </Grid>
-    </div>
+      </div>
+    </Unprotected>
   );
 }
