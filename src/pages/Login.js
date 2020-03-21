@@ -70,6 +70,9 @@ export default function Login(props) {
     firebase
       .auth()
       .signInWithEmailAndPassword(state.email, state.password)
+      .then(() => {
+        history.push("/");
+      })
       .catch(e => {
         if (e.code === "auth/wrong-password") {
           setState({
@@ -95,9 +98,6 @@ export default function Login(props) {
             }
           });
         }
-      })
-      .then(() => {
-        history.push("/");
       });
   };
 
