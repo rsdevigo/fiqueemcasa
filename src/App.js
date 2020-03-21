@@ -5,6 +5,7 @@ import Home from "./pages/Home";
 import NeedDashboard from "./pages/NeedDashboard";
 import HelperDashboard from "./pages/HelperDashboard";
 import Register from "./pages/Register";
+import CompleteRegister from "./pages/CompleteRegister";
 import BlockedWarning from "./pages/BlockedWarning";
 import Login from "./pages/Login";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
@@ -20,9 +21,12 @@ function App() {
         <Route exact path="/login">
           <Login />
         </Route>
-        <Route exact path="/register">
-          <Register />
-        </Route>
+        <Route path="/register/:category" component={Register} />
+        <Route
+          path="/completeregister/:category"
+          component={CompleteRegister}
+        />
+        <Route exact path="/completeregister" component={CompleteRegister} />
         <Route exact path="/helperdashboard">
           <HelperDashboard />
         </Route>
