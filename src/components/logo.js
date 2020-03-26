@@ -8,7 +8,7 @@ const useStyles = makeStyles(theme => ({
     backgroundColor: theme.palette.primary.main
   },
   logoTypography: {
-    color: "#ffffff",
+    color: theme.palette.primary.main,
     fontFamily: "Oswald, sans-serif",
     fontWeight: 700,
     fontSize: "4.4rem",
@@ -17,7 +17,7 @@ const useStyles = makeStyles(theme => ({
     lineHeight: 1
   },
   logoTypographyCasa: {
-    color: "#ffffff",
+    color: theme.palette.primary.main,
     fontFamily: "Oswald, sans-serif",
     fontWeight: 700,
     fontSize: "7.6rem",
@@ -53,7 +53,7 @@ export default function Logo() {
       <Typography
         paragraph={true}
         align="center"
-        color="textPrimary"
+        color="primary"
         variant="body1"
         className={classes.desc}
       >

@@ -1,6 +1,7 @@
 import React from "react";
 import { useState } from "react";
-import { Grid, Button, TextField } from "@material-ui/core";
+import { Grid, Button, TextField, Typography } from "@material-ui/core";
+import WarningIcon from "@material-ui/icons/Warning";
 import { makeStyles } from "@material-ui/core/styles";
 import Logo from "../components/logo";
 import Unprotected from "../components/unprotected";
@@ -9,8 +10,7 @@ import firebase from "../firebase";
 
 const useStyles = makeStyles(theme => ({
   root: {
-    flexGrow: 1,
-    backgroundColor: theme.palette.primary.main
+    flexGrow: 1
   },
   formContainer: {
     padding: "10px"
@@ -80,20 +80,37 @@ export default function Register(props) {
       .auth()
       .createUserWithEmailAndPassword(state.email, state.password)
       .catch(e => {
-        console.log(e);
-        setState({
-          ...state,
-          validationerror: {
-            ...state.validationerror,
-            email: {
-              error: true,
-              message: "O email já possui um cadastro"
+        if (e.code === "auth/weak-password") {
+          setState({
+            ...state,
+            validationerror: {
+              ...state.validationerror,
+              email: {
+                error: false,
+                message: ""
+              },
+              password: {
+                error: true,
+                message: "A senha é muito fraca"
+              }
             }
-          }
-        });
-      })
-      .then(resp => {
-        history.push("/completeregister/" + props.match.params.category);
+          });
+        } else {
+          setState({
+            ...state,
+            validationerror: {
+              ...state.validationerror,
+              email: {
+                error: true,
+                message: "O email já possui um cadastro"
+              },
+              password: {
+                error: false,
+                message: ""
+              }
+            }
+          });
+        }
       });
   };
   return (
@@ -101,6 +118,15 @@ export default function Register(props) {
       <div className={classes.root}>
         <Grid container direction="row" justify="center" alignItems="center">
           <Logo />
+          <Grid item xs={12} style={{ margin: "3px" }}>
+            <Typography paragraph={true} align="center">
+              <WarningIcon style={{ fontSize: 40, color: "#ffb74d" }} />
+            </Typography>
+            <Typography paragraph={true} align="center">
+              Lembre-se ajude ou peça ajuda somente em caso de necessidade
+              extrema. Não coloque você e nem outra pessoa em risco.
+            </Typography>
+          </Grid>
           <Grid item xs={12} className={classes.formContainer}>
             <form className={classes.root} noValidate autoComplete="off">
               <TextField

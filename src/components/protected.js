@@ -7,8 +7,7 @@ import { Redirect } from "react-router-dom";
 
 const useStyles = makeStyles(theme => ({
   root: {
-    flexGrow: 1,
-    backgroundColor: theme.palette.primary.main
+    flexGrow: 1
   }
 }));
 
@@ -20,7 +19,9 @@ export default function Protected(props) {
       <div className={classes.root}>
         <Grid container direction="row" justify="center" alignItems="center">
           <Logo />
-          <Typography variant="h6">Buscando sessão salva.</Typography>
+          <Typography variant="h6" color="primary">
+            Buscando sessão salva.
+          </Typography>
         </Grid>
       </div>
     );

@@ -16,8 +16,7 @@ import firebase from "../firebase";
 
 const useStyles = makeStyles(theme => ({
   root: {
-    flexGrow: 1,
-    backgroundColor: theme.palette.primary.main
+    flexGrow: 1
   },
   formContainer: {
     padding: "10px"

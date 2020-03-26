@@ -7,8 +7,7 @@ import useUserProfile from "../hooks/useUserProfile";
 import { Redirect } from "react-router-dom";
 const useStyles = makeStyles(theme => ({
   root: {
-    flexGrow: 1,
-    backgroundColor: theme.palette.primary.main
+    flexGrow: 1
   }
 }));
 

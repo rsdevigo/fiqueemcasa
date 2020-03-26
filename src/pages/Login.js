@@ -10,7 +10,7 @@ import Unprotected from "../components/unprotected";
 const useStyles = makeStyles(theme => ({
   root: {
     flexGrow: 1,
-    backgroundColor: theme.palette.primary.main
+    color: "#333333"
   },
   desc: {
     fontWeight: 700,
