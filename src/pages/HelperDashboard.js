@@ -22,6 +22,8 @@ import { useCollection } from "react-firebase-hooks/firestore";
 import GoogleMapReact from "google-map-react";
 import CallInfoCard from "../components/call_info_card";
 import CallAcceptedCard from "../components/call_accepted_card";
+import { Redirect } from "react-router-dom";
+import { usePosition } from "use-position";
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -89,6 +91,14 @@ export default function HelperDashboard() {
     }
   );
 
+  const {
+    latitude,
+    longitude,
+    timestamp,
+    accuracy,
+    geoerror
+  } = usePosition(false, { enableHighAccuracy: true });
+
   const logout = () => {
     firebase
       .auth()
@@ -96,6 +106,8 @@ export default function HelperDashboard() {
       .then(history.push("/"));
   };
   const handleApiLoaded = (map, maps) => {
+    map.panTo({ lat: latitude, lng: longitude });
+    map.setZoom(16);
     let markers = [];
     markers.map(marker => {
       marker.setMap(null);
@@ -135,6 +147,9 @@ export default function HelperDashboard() {
 
   return (
     <Protected>
+      {userProfile && userProfile.get("user_category") == "need" && (
+        <Redirect to="/needdashboard" />
+      )}
       <div className={classes.root}>
         <AppBar position="fixed" color="primary">
           <Toolbar>
@@ -159,6 +174,11 @@ export default function HelperDashboard() {
             {mycallLoading && (
               <Typography variant="h6" align="center" style={{ marginTop: 70 }}>
                 Verificando se você possui um pedido de ajuda em aberto
+              </Typography>
+            )}
+            {!latitude && (
+              <Typography variant="h6" align="center" style={{ marginTop: 70 }}>
+                Verificando sua posição
               </Typography>
             )}
             {!mycallLoading && (

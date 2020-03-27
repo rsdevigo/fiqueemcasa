@@ -51,6 +51,14 @@ const formatPhoneNumber = number => {
 export default function CompleteRegister(props) {
   const classes = useStyles();
   const history = useHistory();
+  const logout = () => {
+    firebase
+      .auth()
+      .signOut()
+      .then(() => {
+        history.push("/");
+      });
+  };
   const [userProfileError, initialising, userProfile, user] = useUserProfile();
   const [state, setState] = useState({
     name: "",
@@ -103,7 +111,11 @@ export default function CompleteRegister(props) {
           .firestore()
           .collection("users_profiles")
           .doc(user.uid)
-          .set({ ...state, blocked: true })
+          .set({
+            ...state,
+            blocked: true,
+            createAt: firebase.firestore.Timestamp.now()
+          })
           .then(() => {
             history.push("/blockedwarning");
           })
@@ -236,6 +248,16 @@ export default function CompleteRegister(props) {
                 onClick={onSubmit}
               >
                 Finalizar Cadastro
+              </Button>
+              <Button
+                variant="contained"
+                size="medium"
+                fullWidth={true}
+                color="secondary"
+                className={classes.actionButtons}
+                onClick={logout}
+              >
+                Sair da conta
               </Button>
             </form>
           </Grid>

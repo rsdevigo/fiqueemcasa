@@ -25,6 +25,7 @@ import { useSession } from "../hooks/useSession";
 import { usePosition } from "use-position";
 import CallDialogWarning from "../components/call_dialog_warning";
 import CallNeedCard from "../components/call_need_card";
+import { Redirect } from "react-router-dom";
 const useStyles = makeStyles(theme => ({
   root: {
     flexGrow: 1
@@ -145,6 +146,9 @@ export default function NeedDashboard() {
 
   return (
     <Protected>
+      {userProfile && userProfile.get("user_category") == "helper" && (
+        <Redirect to="/helperdashboard" />
+      )}
       <div className={classes.root}>
         <AppBar position="fixed" color="primary">
           <Toolbar>

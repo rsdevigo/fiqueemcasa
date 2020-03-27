@@ -1,12 +1,21 @@
 import React from "react";
 import { useState } from "react";
-import { Grid, Button, TextField, Typography } from "@material-ui/core";
+import {
+  Grid,
+  Button,
+  TextField,
+  Typography,
+  ExpansionPanel,
+  ExpansionPanelSummary,
+  ExpansionPanelDetails
+} from "@material-ui/core";
 import WarningIcon from "@material-ui/icons/Warning";
 import { makeStyles } from "@material-ui/core/styles";
 import Logo from "../components/logo";
 import Unprotected from "../components/unprotected";
 import { useHistory } from "react-router-dom";
 import firebase from "../firebase";
+import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -21,6 +30,11 @@ const useStyles = makeStyles(theme => ({
   actionButtons: {
     fontSize: "1.3rem",
     marginBottom: "2.18rem"
+  },
+  expanel: {
+    margin: 6,
+    backgroundColor: theme.palette.primary.main,
+    color: "#ffffff"
   }
 }));
 
@@ -126,6 +140,30 @@ export default function Register(props) {
               Lembre-se ajude ou peça ajuda somente em caso de necessidade
               extrema. Não coloque você e nem outra pessoa em risco.
             </Typography>
+            <ExpansionPanel className={classes.expanel}>
+              <ExpansionPanelSummary
+                expandIcon={<ExpandMoreIcon />}
+                aria-controls="panel1a-content"
+                id="panel1a-header"
+              >
+                <Typography className={classes.heading}>
+                  Sobre o Fique em casa
+                </Typography>
+              </ExpansionPanelSummary>
+              <ExpansionPanelDetails>
+                <Typography paragraph={true} align="justify">
+                  O fique em casa é uma maneira de fazer a ligação de quem
+                  precisa de ajuda e quem pode ajudar. <br />
+                  Como o nome indica, o objetivo é que as pessoas que estão no
+                  grupo de risco fiquem em casa! Você pode pedir ajuda para
+                  comprar um remédio ou um alimento, por exemplo. <br />
+                  Os voluntários irão fazer contato, com todos os cuidados de
+                  higiene, irá combinar de pegar o dinheiro, fazer a compra e
+                  entregar. Os voluntários não irão pagar a despesa, apenas
+                  ajudar no deslocamento.
+                </Typography>
+              </ExpansionPanelDetails>
+            </ExpansionPanel>
           </Grid>
           <Grid item xs={12} className={classes.formContainer}>
             <form className={classes.root} noValidate autoComplete="off">
@@ -157,6 +195,7 @@ export default function Register(props) {
                 onChange={handleChangeInput("password")}
                 value={state.password}
               />
+
               <Button
                 variant="contained"
                 size="medium"
